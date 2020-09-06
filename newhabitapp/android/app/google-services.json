@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "40443518256",
+    "firebase_url": "https://auth-server-26f00.firebaseio.com",
+    "project_id": "auth-server-26f00",
+    "storage_bucket": "auth-server-26f00.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:40443518256:android:3977d9bdf54b403435bcf5",
+        "android_client_info": {
+          "package_name": "com.baa.newhabitapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "40443518256-795qffsip02eoskj4apuk6co980jjl13.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9cPrHUvApas7PXAV9l_M0GH_Y4Nrctq8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "40443518256-795qffsip02eoskj4apuk6co980jjl13.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
