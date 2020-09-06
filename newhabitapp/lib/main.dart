@@ -195,7 +195,7 @@ class LoginScreen extends StatelessWidget {
         idToken: googleAuth.idToken, accessToken: googleAuth.accessToken);
 
     final FirebaseUser user =
-        (await firebaseAuth.signInWithCredential(credential)).user;
+        (await firebaseAuthag.signInWithCredential(credential)).user;
   }
 
   _buildTextField(
