@@ -2,14 +2,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:splashscreen/splashscreen.dart';
+
+import 'Home.dart';
+import 'SignUp.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(home: new HomeScreen());
+    return new MaterialApp(home: IntroScreen());
+    // return new MaterialApp(home: HomeScreen());
   }
 }
 
@@ -139,7 +143,7 @@ class LoginScreen extends StatelessWidget {
                   minWidth: double.maxFinite,
                   height: 50,
                   onPressed: () {
-                    _signInWithGoogle();
+                    // _signInWithGoogle();
                     //Here goes the logic for Google SignIn discussed in the next section
                   },
                   color: Colors.blue,
@@ -182,21 +186,21 @@ class LoginScreen extends StatelessWidget {
       ],
     );
   }
-    _signInWithGoogle() async {
-    final FirebaseAuth _auth = FirebaseAuth.instance;
-    final GoogleSignIn googleSignIn = GoogleSignIn();
-
-    final GoogleSignInAccount googleUser = await googleSignIn.signIn();
-    final GoogleSignInAuthentication googleAuth =
-    await googleUser.authentication;
-
-
-    final AuthCredential credential = GoogleAuthProvider.getCredential(
-        idToken: googleAuth.idToken, accessToken: googleAuth.accessToken);
-
-    final FirebaseUser user =
-        (await firebaseAuthag.signInWithCredential(credential)).user;
-  }
+  //   _signInWithGoogle() async {
+  //   final FirebaseAuth _auth = FirebaseAuth.instance;
+  //   final GoogleSignIn googleSignIn = GoogleSignIn();
+  //
+  //   final GoogleSignInAccount googleUser = await googleSignIn.signIn();
+  //   final GoogleSignInAuthentication googleAuth =
+  //   await googleUser.authentication;
+  //
+  //
+  //   final AuthCredential credential = GoogleAuthProvider.getCredential(
+  //       idToken: googleAuth.idToken, accessToken: googleAuth.accessToken);
+  //
+  //   final FirebaseUser user =
+  //       (await firebaseAuthag.signInWithCredential(credential)).user;
+  // }
 
   _buildTextField(
       TextEditingController controller, IconData icon, String labelText) {
@@ -218,6 +222,54 @@ class LoginScreen extends StatelessWidget {
             // prefix: Icon(icon),
             border: InputBorder.none),
       ),
+    );
+  }
+}
+
+class IntroScreen extends StatefulWidget{
+
+
+  @override
+  _IntroScreenState createState() => _IntroScreenState();
+}
+
+class _IntroScreenState extends State<IntroScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseAuth.instance.currentUser().then((res) {
+      print(res);
+      if (res != null) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => Home(uid: res.uid)),
+        );
+      }
+      else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SignUp()),
+        );
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new SplashScreen(
+        seconds: 15,
+        title: new Text('Welcome To HabitApp!',
+          style: new TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20.0
+          ),),
+        image: Image.asset('assets/images/3.jpg', fit: BoxFit.scaleDown),
+        backgroundColor: Colors.white,
+        styleTextUnderTheLoader: new TextStyle(),
+        photoSize: 100.0,
+        onClick: () => print("flutter"),
+        loaderColor: Colors.red
     );
   }
 }
