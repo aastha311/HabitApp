@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-
+import 'package:calendar_timeline/calendar_timeline.dart';
 import 'main.dart';
+import 'package:flutter/services.dart';
 
 class Home extends StatelessWidget {
   Home({this.uid});
@@ -11,9 +12,11 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     return Scaffold(
         appBar: AppBar(
           title: Text(title),
+          //remove the icon button when you know where the sign out goes
           actions: <Widget>[
             IconButton(
               icon: Icon(
@@ -32,7 +35,18 @@ class Home extends StatelessWidget {
             )
           ],
         ),
-        body: Center(child: Text('Welcome!')),
+        body: new Column(children: [
+          new Flexible(
+            child: new Container(
+                  // height: MediaQuery.of(context).size.height / 4,
+                  child: new Calendar())
+          ),
+          new Text('Welcome!', style: new TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ))
+        ]),
+        // Center(child: Text('Welcome!')),
         drawer: NavigateDrawer(uid: this.uid));
   }
 }
@@ -107,6 +121,65 @@ class _NavigateDrawerState extends State<NavigateDrawer> {
             },
           ),
         ],
+      ),
+    );
+  }
+}
+
+
+
+class Calendar extends StatefulWidget {
+  @override
+  _CalenderState createState() => _CalenderState();
+}
+
+class _CalenderState extends State<Calendar> {
+
+  DateTime _selectedDate;
+
+  @override
+  void initState() {
+    super.initState();
+    _resetSelectedDate();
+  }
+
+  void _resetSelectedDate() {
+    _selectedDate = DateTime.now();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color(0xFF333A47),
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            CalendarTimeline(
+              initialDate: _selectedDate,
+              firstDate: DateTime.now(),
+              lastDate: DateTime.now().add(Duration(days: 14)),
+              onDateSelected: (date) {
+                setState(() {
+                  _selectedDate = date;
+                });
+              },
+              leftMargin: 10,
+              //TODO see if you can get rid of the space
+              monthColor: Colors.white70,
+              // monthColor: Color(0xFF333A47),
+              dayColor: Colors.teal[200],
+              dayNameColor: Color(0xFF333A47),
+              activeDayColor: Colors.white,
+              activeBackgroundDayColor: Colors.redAccent[100],
+              dotsColor: Color(0xFF333A47),
+              //INFO: to grey out a date
+              // selectableDayPredicate: (date) => date.day != 23,
+              locale: 'en',
+            ),
+            SizedBox(height: 10),
+          ],
+        ),
       ),
     );
   }

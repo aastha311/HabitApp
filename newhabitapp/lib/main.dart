@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:splashscreen/splashscreen.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'Home.dart';
 import 'SignUp.dart';
@@ -12,7 +13,21 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(home: IntroScreen());
+    return new MaterialApp(
+        // debugShowCheckedModeBanner: false,
+        // theme: ThemeData(
+        //   primarySwatch: Colors.teal[200],
+        // ),
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [
+          const Locale('es'),
+          const Locale('en'),
+        ],
+        home: IntroScreen());
     // return new MaterialApp(home: HomeScreen());
   }
 }
@@ -258,7 +273,7 @@ class _IntroScreenState extends State<IntroScreen> {
   @override
   Widget build(BuildContext context) {
     return new SplashScreen(
-        seconds: 15,
+        seconds: 5,
         title: new Text('Welcome To HabitApp!',
           style: new TextStyle(
               fontWeight: FontWeight.bold,
